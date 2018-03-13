@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+  <script>
+
+  var array = ["thing1", "thing2", "thing3"];
+  var parameters = {
+    "array1[]": array
+  };
+var text;
+  function sendData(){
+    $.post(
+      'http://127.0.0.1:8000/Sentiments/',
+      parameters,function(data){
+          text = data;
+
+          openWindow(text);
+
+      }
+    )
+  }
+  function openWindow(data){
+    var w = window.open('about:blank' , 'windowname');
+   w.document.open();
+   w.document.write(JSON.stringify(data));
+   w.document.close();
+ }
+  </script>
+<form  method="get" action="http://127.0.0.1:8000/Sentiments/" id="usrform">
+  Give the comment:<br>
+  <input type="submit" value="Check Sentiment">
+</form>
+<textarea rows="4" cols="50" name="comment" form="usrform" placeholder="Enter the comment">
+</textarea> <br><br>
+
+<input id="MyButton" type="button" value="Send Comments From database" onclick="sendData()" />
+
+
+
+</body>
+
+</html>
